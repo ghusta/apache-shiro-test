@@ -1,4 +1,4 @@
-# APACHE SHIRO test
+# Apache Shiro quick test
 
 ## Overview
 
