@@ -1,5 +1,7 @@
 package fr.husta.test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -51,6 +53,13 @@ public class SimpleTest {
             AuthenticationToken token = new UsernamePasswordToken("user", "password");
             // token.setRememberMe(true);
             log.debug("token : {}", ToStringBuilder.reflectionToString(token));
+
+            // login
+            currentUser.login(token);
+
+            assertThat(currentUser.isAuthenticated()).isTrue();
+            assertThat(currentUser.hasRole("admin")).isTrue();
+            assertThat(currentUser.hasRole("editor")).isFalse();
         }
     }
 
