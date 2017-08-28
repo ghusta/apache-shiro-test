@@ -2,6 +2,8 @@ package fr.husta.test;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -42,8 +44,14 @@ public class SimpleTest {
 
     @Test
     public void simpleTest() throws Exception {
-        Subject subject = SecurityUtils.getSubject();
-        log.debug("subject : {}", ToStringBuilder.reflectionToString(subject));
+        Subject currentUser = SecurityUtils.getSubject();
+        log.debug("subject : {}", ToStringBuilder.reflectionToString(currentUser));
+
+        if (!currentUser.isAuthenticated()) {
+            AuthenticationToken token = new UsernamePasswordToken("user", "password");
+            // token.setRememberMe(true);
+            log.debug("token : {}", ToStringBuilder.reflectionToString(token));
+        }
     }
 
 }
